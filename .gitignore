@@ -1,0 +1,8 @@
+*.pyc
+/doc
+/dist
+/rswt.egg-info
+/test-sdist
+test.py
+*.swp
+

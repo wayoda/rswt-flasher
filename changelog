@@ -1,0 +1,5 @@
+2015-09-09 Eberhard Fahle <e.fahle@wayoda.org>
+	* rswt-flasher : first successful firmware upload. 
+	* release : create inital repository on github and publish the project
+	on the pypi test server
+
