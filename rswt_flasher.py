@@ -262,8 +262,7 @@ class Uploader(object):
         return False
 
 
-
-if __name__ == '__main__':
+def upload():
     cmdP=CmdParser()
     args=cmdP.parse(sys.argv[1:])
     firmware=IntelHexFile(args['firmware'])
@@ -277,5 +276,7 @@ if __name__ == '__main__':
     uploader.run()
     exit()
 
+if __name__ == '__main__':
+    upload()
 
     

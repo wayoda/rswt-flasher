@@ -32,14 +32,15 @@ def find_version(*file_paths):
 
 setup(
     name='rswt-flasher',
-    version=find_version("rswt-flasher"),
+    py_modules=['rswt_flasher'],
+    entry_points={'console_scripts': ['rswt-flasher = rswt_flasher:upload']},
+    version=find_version('rswt_flasher.py'),
     description='Firmware upload utility for a RobertSonics WavTrigger.',
     long_description=(read('README.rst') + '\n\n' ),
     url='https://github.com/wayoda/rswt-flasher/',
     license="MIT",
     author="Eberhard Fahle",
     author_email='e.fahle@wayoda.org',
-    py_modules=['rswt-flasher'],
     install_requires=['pyserial'],
     classifiers=[
         'Development Status :: 4 - Beta',
