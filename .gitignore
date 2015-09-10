@@ -2,6 +2,7 @@
 /doc
 /dist
 /*.egg-info
-/test-sdist
+/test-dist
+/build
 *.swp
 
