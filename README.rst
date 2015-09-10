@@ -27,7 +27,7 @@ Source code
 The project is hosted on `Github`_
 
 
-.. _`Github project page` : http://wayoda.github.io/rswt-flasher/
+.. _`Github project page` : https://github.com/wayoda/rswt-flasher/
 .. _`RobertSonics WavTrigger` : http://robertsonics.com/wav-trigger/
 .. _`python serial library` : http://pyserial.sourceforge.net 
 .. _`RobertSonics website` : http://robertsonics.com/wav-trigger-online-user-guide

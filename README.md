@@ -9,7 +9,7 @@ player for wave files. Audio playback can be controlled through a serial port.
 
 ##Documentation
 
-Documentation for the `rswt-flasher`utility is [here](http://wayoda.github.io/rswt/)
+Documentation for the `rswt-flasher` utility is in the [here](#run)
 
 [RobertSonics](http://robertsonics.com/) published a [users
 guide](http://robertsonics.com/wav-trigger-online-user-guide/) for the
@@ -31,7 +31,7 @@ library](http://pyserial.sourceforge.net/) must be installed too.  The latest
 official release is always on the [rswt-flasher release
 pages](https://github.com/wayoda/rswt-flasher/releases).
 
-##Run 
+##Run<a name="run"></a> 
 
 Download the file `rswt-flasher` and run it to upload new firmware
 
