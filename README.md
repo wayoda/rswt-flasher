@@ -7,6 +7,15 @@ player for wave files. Audio playback can be controlled through a serial port.
 
 `rswt-flasher` works on Python 2.7 as well as Python 3.
 
+# Can this brick my device???
+Well, I did my best to not run into trouble with the hardware. 
+There is no official documentation on the upload process, I just translated the code of a 
+[RobertSonics project](https://github.com/robertsonics/WAV-Trigger-Remote/blob/master/Source/Downloader.cpp) into python.
+I also made quite a few programming errors during testing which resulted into uploading complete rubbish to the WavTrigger 
+but once I got it right the device recovered and worked as always.
+
+So, AFAIK `rswt-flasher` is safe to use with the WavTrigger
+
 ##Documentation
 
 Documentation for the `rswt-flasher` utility is in the [here](#run)
@@ -39,7 +48,11 @@ Just mind that the [PySerial library](http://pyserial.sourceforge.net/) must be 
 
 ##Run<a name="run"></a> 
 
-Download the file `rswt-flasher` and or run `pip -install rswt-flasher` and run it to upload new firmware
+- Download the file `rswt-flasher` and or run `pip -install rswt-flasher`.
+- Set the  `Load/Run`-switch on the WavTrigger to the `Load`-position and power-cycle the device. 
+- run `rswt-flasher` to upload the firmware
+
+@The WavTrigger needs to be power-cycled every time before you start an upload.@ 
 
 ###Helpscreen
 ```
