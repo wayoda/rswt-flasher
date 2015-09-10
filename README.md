@@ -26,14 +26,20 @@ or
 
 ##Install from github
 
-The `rswt-flasher` utility consists of just a single file `rwst-flasher`.  The [PySerial
-library](http://pyserial.sourceforge.net/) must be installed too.  The latest
-official release is always on the [rswt-flasher release
-pages](https://github.com/wayoda/rswt-flasher/releases).
+The `rswt-flasher` utility consists of just a single python file `rwst_flasher.py`. 
+
+@It's not possible to rename the sourcefile in the repository to `rswt-flasher` or `rswt-flasher.py` 
+because then it does not get picked up by the python setup tools for the PyPi distribution.@
+
+For you convenience there is a copy of the original python source file on the [rswt-flasher release
+pages](https://github.com/wayoda/rswt-flasher/releases) named `rswt-flasher`
+which can be run directly from the download directory.
+
+Just mind that the [PySerial library](http://pyserial.sourceforge.net/) must be installed too.  
 
 ##Run<a name="run"></a> 
 
-Download the file `rswt-flasher` and run it to upload new firmware
+Download the file `rswt-flasher` and or run `pip -install rswt-flasher` and run it to upload new firmware
 
 ###Helpscreen
 ```

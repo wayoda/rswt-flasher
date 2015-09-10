@@ -1,10 +1,11 @@
 #!/usr/bin/env python
+# encoding=utf8
 
 from __future__ import (absolute_import, division, print_function, unicode_literals)
 
 """A utility to upload new firmware to a RobertSonics WavTrigger """
 
-__version__ = '0.0.1'
+__version__ = '0.1.0'
 __author__ = 'Eberhard Fahle'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2015 Eberhard Fahle'
@@ -27,7 +28,7 @@ class IntelHexFile(object):
     The class reads the file, tests if the checksums match and 
     creates a list of address,data tuples that can be directly uploaded to
     a WavTrigger.
-    
+
     Note: this only works for a file containing WavTrigger firmware. 
     The class does NOT implement a full IntelHexFile parser.
     """
@@ -48,7 +49,7 @@ class IntelHexFile(object):
         bytearray elements, ready for sending to the WavTrigger
         """
         return self._firmware[:]
-    
+
     def getFilename(self):
         """Gets the original path from which the firmware was loaded.""" 
         return self._fn
@@ -83,7 +84,7 @@ class IntelHexFile(object):
             checkSum=checkSum & 0xFF
             if checkSum:
                 raise ValueError("Invalid checksum:"+str(checkSum)+" on Line:"+str(lineNumber))
-            
+
             #Now process the data to be uploaded 
             #We can safely ignore all lines that are not Data Records
             if recType==0x00:
@@ -109,30 +110,29 @@ class CmdParser(object):
     """Wraps the parser for commandline arguments"""
     def __init__(self):
         self._parser=argparse.ArgumentParser(description='Firmware update utility for the WavTrigger',
-                                             prog='wt-flasher')
+                prog='wt-flasher')
         self._parser.add_argument('-d','--DoNotAsk',
-                                  action='store_false',  
-                                  help='Run upload without explicit user confirmation')
+                action='store_false',  
+                help='Run upload without explicit user confirmation')
         self._parser.add_argument('-f','--firmware',
-                                  action='store',
-                                  default='',
-                                  required=True,
-                                  help='Path to the Firmware update')
+                action='store',
+                default='',
+                required=True,
+                help='Path to the Firmware update')
         self._parser.add_argument('-p','--port',
-                                  action='store',
-                                  default='',
-                                  required=True,
-                                  help='Serial port where the WavTrigger is listening')
-                                   
+                action='store',
+                default='',
+                required=True,
+                help='Serial port where the WavTrigger is listening')
+
     def parse(self,userArgs):
-        args=self._parser.parse_args(userArgs).__dict__
-        return args
+        return self._parser.parse_args(userArgs).__dict__
 
 class Uploader(object):
     """Connects to the WavTrigger and uploads the firmware"""
     _serialSpeed=57600
     _serialParity=PARITY_EVEN
-    
+
     _DOWNSTREAM_OK='\x79'
 
     _UPSTREAM_CONTACT_RETRIES=50
@@ -144,13 +144,13 @@ class Uploader(object):
     _UPSTREAM_EXTENDED_ERASE_START=bytearray([0xFF,0xFF,0x00])
 
     _UPSTREAM_WRITE_MEMORY=bytearray([0x31,0xCE])
-    
+
     def __init__(self,port,hexfile):
         self.serial=Serial(baudrate=Uploader._serialSpeed,
-                           parity=Uploader._serialParity)
+                parity=Uploader._serialParity)
         self.serial.port=port
         self.dataFile=hexfile
-        
+
     def run(self):
         """Upload the data to the WavTrigger"""
         try:
@@ -186,7 +186,7 @@ class Uploader(object):
         """Send a contact request to the WavTrigger until the WT
         answers with the _DOWNSTREAM_OK token or the contact request times out
         """
-        self.serial.timeout=0.25
+        self.serial.timeout=0.225
         for r in range(Uploader._UPSTREAM_CONTACT_RETRIES):
             self.serial.write(Uploader._UPSTREAM_CONTACT)
             if self._checkDownstreamOK():
@@ -221,7 +221,7 @@ class Uploader(object):
         self.serial.flushInput()
         self.serial.timeout=0.5
         self.serial.write(Uploader._UPSTREAM_EXTENDED_ERASE)
-	if self._checkDownstreamOK(timeout=0.5):
+        if self._checkDownstreamOK(timeout=0.5):
             self.serial.write(Uploader._UPSTREAM_EXTENDED_ERASE_START)
             self.serial.flushInput()
             if self._checkDownstreamOK(timeout=30.0):
@@ -263,6 +263,7 @@ class Uploader(object):
 
 
 def upload():
+    """Entrypoint for the application"""
     cmdP=CmdParser()
     args=cmdP.parse(sys.argv[1:])
     firmware=IntelHexFile(args['firmware'])
@@ -279,4 +280,4 @@ def upload():
 if __name__ == '__main__':
     upload()
 
-    
+
