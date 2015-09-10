@@ -5,7 +5,10 @@ player for wave files. Audio playback can be controlled through a serial port.
 
 `rswt-flasher` is a commandline utility for uploading an new firmware to a WavTrigger 
 
-`rswt-flasher` works on Python 2.7 as well as Python 3.
+`rswt-flasher` works on Python 2.7 and Python 3.4+
+
+The utility should run on any Operating System, but I only tested it on Linux
+and Windows7. If anybody out there uses it on MacOS, please let me know...
 
 ## Can this brick my device???
 Well, I did my best to not run into trouble with the hardware. 
@@ -42,7 +45,7 @@ because then it does not get picked up by the python setup tools for the PyPi di
 
 For you convenience there is a copy of the original python source file on the [rswt-flasher release
 pages](https://github.com/wayoda/rswt-flasher/releases) named `rswt-flasher`
-which can be run directly from the download directory.
+which can be run directly from your download location. 
 
 Just mind that the [PySerial library](http://pyserial.sourceforge.net/) must be installed too.  
 
