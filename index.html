@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="en">
+    <head>
+        <title>rswt-flasher</title>
+        <meta charset="utf-8" />
+        <meta name="author" content="Eberhard Fahle" />
+        <!-- Enable responsiveness on mobile devices-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+        <link rel="stylesheet" href="http://wayoda.github.io/rswt/theme/css/style.css" type="text/css" />
+
+            <link rel="stylesheet" href="http://wayoda.github.io/rswt/theme/css/github.css" type="text/css" />
+    
+        <link href="http://fonts.googleapis.com/css?family=Gentium+Book Basic:400italic,400,700italic,700" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Inconsolata&subset=latin-ext' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+        <div id="container">
+<div id="header">
+    <div id="header-left" >
+        <span class="header-title"><a href="http://wayoda.github.io/rswt/index.html">rswt-flasher</a></span>
+        </br>
+        <span class="header-description">A firmware upload utility for the RobertSonics WavTrigger</span>
+    </div>
+    <div id="header-nav">
+        <ul>
+        </ul>
+    </div>
+</div>
+<div class="clear"></div>
+<hr class="hr-top">               <div id="content">
+<div class="page">
+    <div id="page-menu">
+        <ul>
+            <li><a href="#Download">Download</a></li>
+            <li><a href="#Quickstart">Quickstart</a></li>
+            <li><a href="#Bugs">Known Bugs</a></li>
+            <li><a href="#Feedback">Feedback</a></li>
+         </ul>
+    </div>
+<h1>rswt-flasher</h1>
+<p><code>rswt-flasher</code> is a simple commandline utility that uploads firmware to a <a href="http://robertsonics.com/wav-trigger/">Robertsonics WavTrigger</a>. </p>
+<p>I wrote this little tool because <a href="http://robertsonics.com/wav-trigger">Robertsonics</a> provides a
+firmware upload utility for  <a href="http://robertsonics.com/wav-trigger-downloads/"><code>Windows</code> and  <code>MacOS</code></a> but not for <code>Linux</code>.
+<code>rswt-flasher</code> is written in python and works on Python 2.7 and Python 3.4+</p>
+<p>The utility should run on any Operating System, but so far I only tested it on Linux
+and Windows7. If anybody out there uses it on MacOS, please let me know...</p>
+<h2><a id="Download"></a> Download and install</h2>
+<p>The source code for the project is on <a href="https://github.com/wayoda/rswt-flasher">Github</a>. 
+Python 2.7 or a recent version Python 3 and the <code>pyserial</code> library is needed for running the tool.</p>
+<h3>Install with <code>pip</code></h3>
+<p>The latest release of the tool is on PyPI. Install with</p>
+<blockquote>
+<p><code>pip install rswt-flasher</code> </p>
+</blockquote>
+<p>or (for Python 3)</p>
+<blockquote>
+<p><code>pip3 install rswt-flasher</code></p>
+</blockquote>
+<p>If the <code>pyserial</code> library is not found on your system, <code>pip</code> will take care of
+that and fetch the latest version from PyPI. </p>
+<h3>Install from Github</h3>
+<p>The tool is also available from the <a href="https://github.com/wayoda/rswt-flasher/releases">rswt-flasher release page</a>. Download the <code>rswt-flasher</code> file and run it from any directory. </p>
+<p><code>rswt-flasher</code> requires the <a href="https://pypi.python.org/pypi/pyserial/2.7">pyserial</a> library to be installed on your system.</p>
+<h2><a id="Quickstart"></a> Quickstart</h2>
+<h3>WavTrigger setup</h3>
+<p>Before the <code>rswt-flasher</code> tool can be run the <code>WavTrigger</code> must be forced into update mode:</p>
+<ul>
+<li>Switch off the power supply of the <code>WavTrigger</code></li>
+<li>Move the <code>Load/Run</code> switch to <code>Load</code> position</li>
+<li>Switch on the power supply of the <code>WavTrigger</code></li>
+<li>The <code>WavTrigger</code> now waits for a firmware update</li>
+</ul>
+<blockquote>
+<p><strong>Note</strong> : You have to power cycle the <code>WavTrigger</code> every time before you start a
+new update. No matter if the last update process was successful or failed the
+device must be switch off and then back on. Otherwise you get a message about
+the <code>WavTrigger</code> not responding.  </p>
+</blockquote>
+<h3>Upload</h3>
+<p>The <code>rswt-flasher</code> utility needs to know the serial port where the <code>WavTrigger</code> is connected
+and the path to the firmware file you want to upload. </p>
+<p>Here is the output from an example session </p>
+<div class="highlight"><pre>user@machine:~$ rswt-flasher -p &#39;/dev/ttyUSB1&#39; -f dev/RobertSonics/misc/firmware/WAVTrig_122_20150718.hex 
+This will erase and overwrite the current firmware of the WavTrigger!
+Type &#39;yes&#39; and hit &lt;return&gt; to proceed : yes
+Found WavTrigger on port &#39;/dev/ttyUSB1&#39;
+Checking version ... OK
+Erase current firmware on the WavTrigger ... OK
+Upload new Firmware &#39;/home/wayoda/dev/RobertSonics/misc/firmware/WAVTrig_122_20150718.hex&#39; ... OK
+user@machine:~$ 
+</pre></div>
+
+
+<p>On a <code>Windows</code> machine the name of the serial port would be something like <code>COMxxx</code>. Where <code>xxx</code> is the number of the serial port where the <code>WavTrigger</code> is connected. </p>
+<p>The explicit user confirmation for the upload can be suppressed by adding the <code>-d</code> or
+<code>--DoNotAsk</code> option to the commandline.</p>
+<h3>Helpscreen</h3>
+<p><code>rswt-flasher -h</code> or <code>rswt-flasher --help</code> prints a list of all the available
+options. </p>
+<div class="highlight"><pre>wayoda@shredder:~$ rswt-flasher -h
+usage: wt-flasher [-h] [-d] -f FIRMWARE -p PORT
+
+Firmware update utility for the WavTrigger
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d, --DoNotAsk        Run upload without explicit user confirmation
+  -f FIRMWARE, --firmware FIRMWARE
+                        Path to the Firmware update
+  -p PORT, --port PORT  Serial port where the WavTrigger is listening
+wayoda@shredder:~$ 
+</pre></div>
+
+
+<h2><a id="Bugs"></a> Known bugs</h2>
+<p>Currently none</p>
+<h3>Can this brick my device???</h3>
+<p>I don't think so. The upload process uses the serial bootloader on the board. 
+There is no easy way to overwrite or delete any memory sections that would brick
+the device.</p>
+<h2>Revision History</h2>
+<p><em>September 10, 2015</em> : First public release<br />
+<em>September 14, 2015</em> : added documentation </p>
+<h2><a id="Feedback"></a>Feedback</h2>
+<p>If you find an error or if you are looking for a special feature not yet covered
+in the existing code, please open a new issue on the <a href="https://github.com/wayoda/rswt-flasher/issues">github project
+page</a>. If you don't
+have a github account (and don't want one) send your questions, objections or
+corrections to <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#46;&#102;&#97;&#104;&#108;&#101;&#64;&#119;&#97;&#121;&#111;&#100;&#97;&#46;&#111;&#114;&#103;">&#101;&#46;&#102;&#97;&#104;&#108;&#101;&#64;&#119;&#97;&#121;&#111;&#100;&#97;&#46;&#111;&#114;&#103;</a></p>
+<h3>License (The software)</h3>
+<p>The sourcecode for this tool is released under the Terms of a <a href="https://github.com/wayoda/rswt-flasher/blob/master/LICENSE">MIT-style
+license</a></p>
+</div>
+ 
+            </div>
+<div id="footer">
+     <div class="footer-info-item">
+         <p><span class="bold">Contact </span><a href="https://github.com/wayoda/rswt-flasher"><img class="icon" src="http://wayoda.github.io/rswt/theme/images/github-dark-20.png" alt="rswt-flasher on Github">rswt-flasher Project on Github</a><a href="mailto:e.fahle@wayoda.org"><img class="icon" src="http://wayoda.github.io/rswt/theme/images/mail-dark-20.png" alt="E-Mail">e.fahle@wayoda.org</a></p>
+         <p><span class="bold">rswt-flasher </span>Current version: 0.1.1 &ndash; &copy; 2015 Eberhard Fahle</p>
+     </div>
+</div>
+    </div> 
+    </body>
+</html>
