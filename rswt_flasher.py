@@ -5,7 +5,7 @@ from __future__ import (absolute_import, division, print_function, unicode_liter
 
 """A utility to upload new firmware to a RobertSonics WavTrigger """
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __author__ = 'Eberhard Fahle'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2015 Eberhard Fahle'
@@ -110,7 +110,7 @@ class CmdParser(object):
     """Wraps the parser for commandline arguments"""
     def __init__(self):
         self._parser=argparse.ArgumentParser(description='Firmware update utility for the WavTrigger',
-                prog='wt-flasher')
+                                             prog='rswt-flasher')
         self._parser.add_argument('-d','--DoNotAsk',
                 action='store_false',  
                 help='Run upload without explicit user confirmation')
@@ -126,6 +126,10 @@ class CmdParser(object):
                 help='Serial port where the WavTrigger is listening')
 
     def parse(self,userArgs):
+        """Parse the commandline args. If no args where given the 'version'
+        arg is returned"""
+        if len(userArgs)==0:
+            return {'version':True}
         return self._parser.parse_args(userArgs).__dict__
 
 class Uploader(object):
@@ -266,6 +270,9 @@ def upload():
     """Entrypoint for the application"""
     cmdP=CmdParser()
     args=cmdP.parse(sys.argv[1:])
+    if 'version' in args:
+        print("rswt-flasher "+__version__)
+        exit()
     firmware=IntelHexFile(args['firmware'])
     uploader=Uploader(port=args['port'],hexfile=firmware)
     if args['DoNotAsk']==True:
